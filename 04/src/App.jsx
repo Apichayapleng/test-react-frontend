@@ -4,11 +4,6 @@ import React, { Component } from "react";
 import "./App.css";
 
 class App extends Component {
-  // state = {
-  //   todos: ["ซื้อเต้าหู้", "แก้บัค"],
-  //   current: ""
-  // };
-
   constructor() {
     super();
     this.state = {
@@ -21,15 +16,12 @@ class App extends Component {
   }
 
   handleInputChange = e => {
-    // this.state.current = e.target.value;
     this.setState({ current: e.target.value });
   };
 
   haddleSubmit = e => {
     event.preventDefault();
     this.setState({ current: e.target.value });
-    // alert(`TODOs: ${current}`);
-    // console.log("current", this.state.current);
   };
 
   handleDelete = e => {
@@ -46,17 +38,19 @@ class App extends Component {
           <h1>WONGNAI TODOs</h1>
         </header>
         <ul>
-          {/* const checkCurrent = this.state.current; 
-          const checkTodo =this.state.todos; */}
           {checkCurrent !== null
             ? checkTodo.map((todo, index) => <li key={index}>{todo}</li>)
             : checkCurrent}
           {checkCurrent === null
             ? checkTodo.map((todo, index) => <li key={index}>{todo}</li>)
             : checkCurrent}
+          {checkCurrent >= 5
+            ? alert("You gotta clear your TODO list")
+            : checkCurrent}
         </ul>
         <form onSubmit={this.handleSubmit} onReset={this.handleDelete}>
           <input
+            ref={a => (this._inputElement = a)}
             type="text"
             placeholder="type todo list"
             value={this.state.current}
