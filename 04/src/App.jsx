@@ -4,33 +4,36 @@ import React, { Component } from "react";
 import "./App.css";
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      value: "",
       todos: ["ซื้อเต้าหู้", "แก้บัค"],
-      current: ""
+      test: ""
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.haddleSubmit = this.haddleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
 
-  handleInputChange = e => {
-    this.setState({ current: e.target.value });
+  handleInputChange = event => {
+    this.setState({ value: event.target.value });
   };
 
-  haddleSubmit = e => {
-    event.preventDefault();
-    this.setState({ current: e.target.value });
+  haddleSubmit = () => {
+    this.state.todos.push(this.state.value);
+    this.setState(this.state);
+    this.state;
+    console.log(this.state.todos);
   };
 
   handleDelete = e => {
     event.preventDefault();
-    this.setState({ current: e.target.value });
+    this.setState({ todos: [], value: "" });
   };
 
   render() {
-    const checkCurrent = this.state.current;
+    const checkvalue = this.state.value;
     const checkTodo = this.state.todos;
     return (
       <div className="App">
@@ -38,26 +41,32 @@ class App extends Component {
           <h1>WONGNAI TODOs</h1>
         </header>
         <ul>
-          {checkCurrent !== null
-            ? checkTodo.map((todo, index) => <li key={index}>{todo}</li>)
-            : checkCurrent}
-          {checkCurrent === null
-            ? checkTodo.map((todo, index) => <li key={index}>{todo}</li>)
-            : checkCurrent}
-          {checkCurrent >= 5
+          {checkvalue !== null
+            ? checkTodo.map(todo => <li key={todo}>{todo}</li>)
+            : checkvalue}
+          {checkTodo.length > 5
             ? alert("You gotta clear your TODO list")
-            : checkCurrent}
+            : this.state.test}
         </ul>
-        <form onSubmit={this.handleSubmit} onReset={this.handleDelete}>
+        <form>
           <input
-            ref={a => (this._inputElement = a)}
+            // ref={a => (this._inputElement = a)}
             type="text"
             placeholder="type todo list"
-            value={this.state.current}
+            className="text"
+            // value={this.state.value}
             onChange={this.handleInputChange}
           />
-          <button type="submit">บันทึก</button>
-          <button type="reset">รีเซ็ท</button>
+          <button
+            type="button"
+            onClick={this.haddleSubmit}
+            disabled={!this.state.value}
+          >
+            บันทึก
+          </button>
+          <button type="button" onClick={this.handleDelete}>
+            รีเซ็ท
+          </button>
         </form>
       </div>
     );
